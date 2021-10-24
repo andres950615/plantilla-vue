@@ -14,13 +14,13 @@
 
 <body>
 
-<div id="app">
+<div id="app" class="container" >
   <h1>Hello App!</h1>
   <p>
     <!-- use router-link component for navigation. -->
     <!-- specify the link by passing the `to` prop. -->
     <!-- `<router-link>` will be rendered as an `<a>` tag by default -->
-    <router-link to="/home">Go to Home</router-link>
+    <router-link class="btn btn-primary" to="/home">Home</router-link>
   </p>
   <!-- route outlet -->
   <!-- component matched by the route will render here -->
@@ -28,6 +28,7 @@
 </div>
 
 <script src="js/home.js"></script>
+<script src="js/create.js"></script>
 <script src="js/index.js"></script>
 </body>
 </html>

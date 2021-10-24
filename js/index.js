@@ -7,7 +7,7 @@ const apiUrl = 'http://localhost/plantilla-php/index.php';
 // These can be imported from other files
 const Foo = { template: '<div>foo</div>' }
 const Bar = { template: '<div>bar</div>' }
-const Home = { 
+const Home = {
 	template: HomeTemplate, 
 	data: function() {
 		return {
@@ -29,7 +29,7 @@ const Home = {
 		      .then(response => {
 		      	console.log(response);
 		      	this.users = response.data;
-		      })
+		      });
 
   			//console.log('getUsers');
   		}
@@ -38,6 +38,56 @@ const Home = {
 	    //console.log('creado');
 	    //console.log(apiUrl);
 	    this.getUsers();
+  	}
+};
+const Create = {
+	template: CreateTemplate, 
+	data: function() {
+		return {
+		    user: {
+		    	username: ''
+		    }
+		}
+	},
+	methods: {
+  		saveUser() {
+
+  			const url = apiUrl;
+
+  			let payload = {
+  				controller: 'user',
+  				method: 'store',
+  				user: this.user
+  			}
+
+  			let formData = new FormData();
+  			formData.append('controller', 'user');
+  			formData.append('method', 'store');
+  			formData.append('user', JSON.stringify(this.user));
+
+  			/*const payload = [
+  				'test' => 'test'
+  			];*/
+
+  			const config = {
+  				headers: {
+  					'Content-Type': 'application/x-www-form-urlencoded'
+  				}
+  			};
+
+  			axios
+		      .post(url,formData,config)
+		      .then(response => {
+		      	console.log(response);
+		      	this.users = response.data;
+		      });
+
+  			console.log(this.user.data);
+  			console.log('saveUser');
+  		}
+    },
+    created: function () {
+	    //this.getUser();
   	}
 };
 
@@ -49,7 +99,8 @@ const Home = {
 const routes = [
   { path: '/foo', component: Foo },
   { path: '/bar', component: Bar },
-  { path: '/home', component: Home }
+  { path: '/home', component: Home },
+  { path: '/create', component: Create },
 ]
 
 // 3. Create the router instance and pass the `routes` option
