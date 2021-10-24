@@ -1,6 +1,8 @@
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
 
+const apiUrl = 'http://localhost/plantilla-php/index.php';
+
 // 1. Define route components.
 // These can be imported from other files
 const Foo = { template: '<div>foo</div>' }
@@ -14,16 +16,27 @@ const Home = {
 		      { text: 'Aprender JavaScript' },
 		      { text: 'Aprender Vue' },
 		      { text: 'Construir algo increíble' }
-		    ]
+		    ],
+		    users: []
 		}
 	},
 	methods: {
   		getUsers() {
-  			console.log('getUsers');
+  			const url = apiUrl + '?controller=user&method=index';
+
+  			axios
+		      .get(url)
+		      .then(response => {
+		      	console.log(response);
+		      	this.users = response.data;
+		      })
+
+  			//console.log('getUsers');
   		}
     },
     created: function () {
-	    console.log('creado');
+	    //console.log('creado');
+	    //console.log(apiUrl);
 	    this.getUsers();
   	}
 };
@@ -50,22 +63,7 @@ const router = new VueRouter({
 // Make sure to inject the router with the router option to make the
 // whole app router-aware.
 const app = new Vue({
-  router,
-  data: {
-  	msg: 'Hello world',
-  	data: {
-  		todos: [
-	      { text: 'Aprender JavaScript' },
-	      { text: 'Aprender Vue' },
-	      { text: 'Construir algo increíble' }
-	    ]
-    }
-  },
-  methods: {
-  	getUsers() {
-
-  	}
-  }
+  router
 }).$mount('#app')
 
 // Now the app has started!
